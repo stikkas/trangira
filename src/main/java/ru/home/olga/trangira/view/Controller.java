@@ -6,11 +6,7 @@ import ru.home.olga.trangira.MainApp;
  *
  * @author basa
  */
-public abstract class Controller {
+public interface Controller {
 
-	protected MainApp app;
-
-	public void setApp(MainApp stage) {
-		app = stage;
-	}
+	void setApp(MainApp stage);
 }

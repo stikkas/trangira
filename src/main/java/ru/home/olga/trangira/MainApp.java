@@ -3,17 +3,35 @@ package ru.home.olga.trangira;
 import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.home.olga.trangira.model.dao.ArticleDao;
+import ru.home.olga.trangira.model.dao.RashodDao;
 import ru.home.olga.trangira.view.Controller;
 
 public class MainApp extends Application {
 
+	private final AnnotationConfigApplicationContext ctx
+			= new AnnotationConfigApplicationContext(SpringConfig.class);
 	private Stage addDialog;
 	private Stage editDialog;
 	private Stage stage;
+
+	private final ArticleDao ad = ctx.getBean(ArticleDao.class);
+
+	private final RashodDao rd = ctx.getBean(RashodDao.class);
+
+	private final ObservableList<String> articles;
+
+	public MainApp() {
+		articles = FXCollections.observableArrayList(ad.findAll());
+	}
 
 	public Stage getStage() {
 		return stage;
@@ -32,17 +50,18 @@ public class MainApp extends Application {
 	public void showAddDialog() throws IOException {
 		if (addDialog == null) {
 			addDialog = new Stage();
-			System.out.println("Add dialog create");
+			addDialog.initModality(Modality.APPLICATION_MODAL);
 			completeStage(addDialog, "AddDialog.fxml", "Добавление данных");
 		} else {
 			addDialog.show();
 		}
+
 	}
 
 	public void showEditDialog() throws IOException {
 		if (editDialog == null) {
-			System.out.println("Edit dialog create");
 			editDialog = new Stage();
+			editDialog.initModality(Modality.APPLICATION_MODAL);
 			completeStage(editDialog, "EditDialog.fxml", "Удаление / изменение данных");
 		} else {
 			editDialog.show();
@@ -63,4 +82,26 @@ public class MainApp extends Application {
 		stage.setMinWidth(stage.getWidth());
 		stage.setMinHeight(stage.getHeight());
 	}
+
+	public void fillArticles(String prefix) {
+		articles.clear();
+		if (prefix == null) {
+			articles.addAll(ad.findAll());
+		} else {
+			articles.addAll(ad.findStartsWith(prefix));
+		}
+	}
+
+	public ObservableList<String> getArticles() {
+		return articles;
+	}
+
+	public ArticleDao getAd() {
+		return ad;
+	}
+
+	public RashodDao getRd() {
+		return rd;
+	}
+
 }

@@ -10,10 +10,10 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tableView" layoutX="181.0" layoutY="76.0" prefHeight="198.0" prefWidth="362.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="table" layoutX="181.0" layoutY="76.0" prefHeight="198.0" prefWidth="362.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn editable="false" prefWidth="457.0" text="Статья расхода" />
-                <TableColumn editable="false" prefWidth="131.0" text="Сумма" />
+                <TableColumn fx:id="articleColumn" editable="false" prefWidth="457.0" sortable="false" text="Статья расхода" />
+                <TableColumn fx:id="summaColumn" editable="false" prefWidth="131.0" sortable="false" text="Сумма" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -27,7 +27,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Файл">
             <items>
-              <MenuItem mnemonicParsing="false" text="Установить базу" />
+              <MenuItem mnemonicParsing="false" onAction="#chooseDB" text="Установить базу" />
                   <MenuItem mnemonicParsing="false" onAction="#exitApp" text="Выход" />
             </items>
           </Menu>
@@ -49,10 +49,10 @@
       <FlowPane alignment="CENTER_RIGHT" hgap="10.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="с:" />
-            <DatePicker prefHeight="26.0" prefWidth="120.0" />
+            <DatePicker fx:id="startDate" prefHeight="26.0" prefWidth="120.0" />
             <Label text="по:" />
-            <DatePicker prefHeight="26.0" prefWidth="120.0" />
-            <Button mnemonicParsing="false" text="Показать" />
+            <DatePicker fx:id="endDate" prefHeight="26.0" prefWidth="120.0" />
+            <Button mnemonicParsing="false" onAction="#showData" text="Показать" />
          </children>
          <BorderPane.margin>
             <Insets bottom="10.0" right="10.0" />
