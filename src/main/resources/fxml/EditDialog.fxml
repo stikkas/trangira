@@ -24,9 +24,9 @@
    <center>
       <TableView fx:id="table" editable="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="articleColumn" prefWidth="104.0" text="Статья" />
-          <TableColumn fx:id="summaColumn" prefWidth="282.0" text="Сумма" />
-            <TableColumn fx:id="deleteColumn" prefWidth="68.0" sortable="false" text="Удалить" />
+          <TableColumn fx:id="articleColumn" minWidth="300.0" prefWidth="104.0" text="Статья" />
+          <TableColumn fx:id="summaColumn" minWidth="80.0" prefWidth="282.0" text="Сумма" />
+            <TableColumn fx:id="deleteColumn" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" sortable="false" text="Удалить" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
