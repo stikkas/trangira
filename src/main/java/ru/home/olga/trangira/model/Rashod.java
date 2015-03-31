@@ -54,6 +54,13 @@ public class Rashod implements Serializable {
 	public Rashod() {
 	}
 
+	public Rashod(Long id, Date trangDate, Article article, Double summa) {
+		this.id = id;
+		this.trangDate = trangDate;
+		this.article = article;
+		this.summa = summa;
+	}
+
 	public Rashod(Date trangDate, Article article, Double summa) {
 		this.trangDate = trangDate;
 		this.article = article;

@@ -3,8 +3,6 @@ package ru.home.olga.trangira;
 import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,10 +25,7 @@ public class MainApp extends Application {
 
 	private final RashodDao rd = ctx.getBean(RashodDao.class);
 
-	private final ObservableList<String> articles;
-
 	public MainApp() {
-		articles = FXCollections.observableArrayList(ad.findAll());
 	}
 
 	public Stage getStage() {
@@ -83,18 +78,6 @@ public class MainApp extends Application {
 		stage.setMinHeight(stage.getHeight());
 	}
 
-	public void fillArticles(String prefix) {
-		articles.clear();
-		if (prefix == null) {
-			articles.addAll(ad.findAll());
-		} else {
-			articles.addAll(ad.findStartsWith(prefix));
-		}
-	}
-
-	public ObservableList<String> getArticles() {
-		return articles;
-	}
 
 	public ArticleDao getAd() {
 		return ad;

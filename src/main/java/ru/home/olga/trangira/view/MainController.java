@@ -6,10 +6,16 @@ import java.io.IOException;
 import java.util.Date;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.DirectoryChooser;
 import ru.home.olga.trangira.MainApp;
 import ru.home.olga.utils.DateUtil;
@@ -52,6 +58,24 @@ public class MainController implements Controller {
 		app.getStage().close();
 	}
 
+	@FXML
+	private void about() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("О программе");
+		alert.setHeaderText(null);
+
+		GridPane grid = new GridPane();
+		grid.add(new Text("Программа для учета расхода денег."), 0, 0);
+		grid.add(new Text("Программа предназначена для рачительных домохозяек."), 0, 1);
+
+		Text text3 = new Text("Версия 0.0.1");
+		text3.setStyle("-fx-font-weight: bold;");
+		grid.add(text3, 0, 2);
+
+		alert.getDialogPane().setContent(grid);
+		alert.showAndWait();
+	}
+
 	/**
 	 * Меняет базу
 	 */
@@ -61,7 +85,6 @@ public class MainController implements Controller {
 		File dir = dc.showDialog(app.getStage());
 		if (dir != null) {
 			app.getRd().reset(dir.getAbsolutePath());
-			app.fillArticles(null);
 			table.getItems().clear();
 		}
 	}

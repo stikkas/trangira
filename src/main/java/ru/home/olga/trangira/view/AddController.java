@@ -1,6 +1,8 @@
 package ru.home.olga.trangira.view;
 
 import java.time.LocalDate;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -72,8 +74,21 @@ public class AddController implements Controller {
 					data.getSumma()));
 		});
 		table.getItems().clear();
-		app.fillArticles(null);
-		articleBox.setItems(app.getArticles());
+		articleBox.setItems(getArticles(null));
+	}
+
+	/**
+	 * Получает список статей расхода из базы
+	 *
+	 * @param prefix начало имени статьи, если null - то выбираем все значения
+	 * @return список статей
+	 */
+	private ObservableList<String> getArticles(String prefix) {
+		if (prefix == null) {
+			return FXCollections.observableArrayList(app.getAd().findAll());
+		} else {
+			return FXCollections.observableArrayList(app.getAd().findStartsWith(prefix));
+		}
 	}
 
 	public void initialize() {
@@ -92,6 +107,6 @@ public class AddController implements Controller {
 	@Override
 	public void setApp(MainApp stage) {
 		app = stage;
-		articleBox.setItems(app.getArticles());
+		articleBox.setItems(getArticles(null));
 	}
 }
