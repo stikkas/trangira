@@ -15,18 +15,13 @@ import ru.home.olga.trangira.view.Controller;
 
 public class MainApp extends Application {
 
-	private final AnnotationConfigApplicationContext ctx
-			= new AnnotationConfigApplicationContext(SpringConfig.class);
 	private Stage addDialog;
 	private Stage editDialog;
 	private Stage stage;
 
-	private final ArticleDao ad = ctx.getBean(ArticleDao.class);
+	private ArticleDao ad;
 
-	private final RashodDao rd = ctx.getBean(RashodDao.class);
-
-	public MainApp() {
-	}
+	private RashodDao rd;
 
 	public Stage getStage() {
 		return stage;
@@ -36,6 +31,11 @@ public class MainApp extends Application {
 	public void start(Stage stage) throws Exception {
 		completeStage(stage, "Trangira.fxml", "Трать не жалея!");
 		this.stage = stage;
+
+	    AnnotationConfigApplicationContext ctx
+			= new AnnotationConfigApplicationContext(SpringConfig.class);
+        ad = ctx.getBean(ArticleDao.class);
+        rd = ctx.getBean(RashodDao.class);
 	}
 
 	public static void main(String[] args) {
