@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 
 /**
@@ -18,19 +19,19 @@ import javax.persistence.Temporal;
 @NamedQueries({
 	@NamedQuery(name = "Rashod.findInterval",
 			query = "SELECT a.name, SUM(r.summa) AS s FROM Rashod r join r.article "
-					+ "a WHERE r.trangDate BETWEEN :start AND :end GROUP BY a.name ORDER BY s"
+			+ "a WHERE r.trangDate BETWEEN :start AND :end GROUP BY a.name ORDER BY s"
 	),
 	@NamedQuery(name = "Rashod.findFromStart",
 			query = "SELECT a.name, SUM(r.summa) AS s FROM Rashod r join r.article "
-					+ "a WHERE r.trangDate >= :start GROUP BY a.name ORDER BY s"
+			+ "a WHERE r.trangDate >= :start GROUP BY a.name ORDER BY s"
 	),
 	@NamedQuery(name = "Rashod.findToEnd",
 			query = "SELECT a.name, SUM(r.summa) AS s FROM Rashod r join r.article "
-					+ "a WHERE r.trangDate <= :end GROUP BY a.name ORDER BY s"
+			+ "a WHERE r.trangDate <= :end GROUP BY a.name ORDER BY s"
 	),
 	@NamedQuery(name = "Rashod.findAll",
 			query = "SELECT a.name, SUM(r.summa) AS s FROM Rashod r join r.article "
-					+ "a GROUP BY a.name ORDER BY s"
+			+ "a GROUP BY a.name ORDER BY s"
 	),
 	@NamedQuery(name = "Rashod.findForDate",
 			query = "SELECT r FROM Rashod r WHERE r.trangDate = :date"),
@@ -40,7 +41,10 @@ import javax.persistence.Temporal;
 public class Rashod implements Serializable {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(generator = "sqlite_rashod")
+	@TableGenerator(name = "sqlite_rashod", table = "sequence",
+			pkColumnName = "seq_name", valueColumnName = "seq_count",
+			pkColumnValue = "rashod", allocationSize = 1)
 	private Long id;
 
 	@Temporal(javax.persistence.TemporalType.DATE)

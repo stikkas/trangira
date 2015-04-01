@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.TableGenerator;
 
 /**
  * Наименования статей расхода
@@ -26,7 +27,10 @@ import javax.persistence.NamedQuery;
 public class Article implements Serializable {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(generator = "sqlite")
+	@TableGenerator(name = "sqlite", table = "sequence",
+			pkColumnName = "seq_name", valueColumnName = "seq_count",
+			pkColumnValue = "article", allocationSize = 1)
 	private Long id;
 
 	@Column(name = "name", unique = true)
