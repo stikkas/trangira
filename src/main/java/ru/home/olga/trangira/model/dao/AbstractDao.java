@@ -17,26 +17,40 @@ public class AbstractDao {
 	protected static EntityManager em;
 	protected static EntityTransaction etx;
 
-	public AbstractDao() {
-		reset();
+	public AbstractDao(boolean res) {
+		if (res) {
+			reset();
+		}
 	}
 
 	public void reset() {
-		String baseDir = Preferences.userNodeForPackage(MainApp.class).get("dbPath", null);
-		if (baseDir == null) {
-			baseDir = System.getenv("HOME");
+		String dbFileName = Preferences.userNodeForPackage(MainApp.class).get("dbPath", null);
+		if (dbFileName == null) {
+			dbFileName = Paths.get(System.getenv("HOME"), "trangira.sqlite").toString();
 		}
-		reset(baseDir);
+		reset(dbFileName);
 	}
 
 	public void reset(String newPath) {
-		if (!newPath.endsWith("Trangira")) {
-			newPath = Paths.get(newPath, "Trangira").toString();
-		}
+		/*
+		 if (!newPath.endsWith("Trangira")) {
+		 newPath = Paths.get(newPath, "Trangira").toString();
+		 }
+		 */
 		Properties props = new Properties();
-		props.setProperty("javax.persistence.jdbc.url", "jdbc:derby:" + newPath + ";create=true");
+//		props.setProperty("javax.persistence.jdbc.url", "jdbc:derby:" + newPath + ";create=true");
+		props.setProperty("javax.persistence.jdbc.url", "jdbc:sqlite:" + newPath);
 		em = Persistence.createEntityManagerFactory("PU", props).createEntityManager();
 		etx = em.getTransaction();
 		Preferences.userNodeForPackage(MainApp.class).put("dbPath", newPath);
 	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		if (em != null && em.isOpen()) {
+			em.close();
+		}
+		super.finalize();
+	}
+
 }

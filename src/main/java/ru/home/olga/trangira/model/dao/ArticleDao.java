@@ -1,14 +1,17 @@
 package ru.home.olga.trangira.model.dao;
 
 import java.util.List;
-import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Благодатских С.
  */
-@Component
 public class ArticleDao extends AbstractDao {
+
+	public ArticleDao() {
+		super(true);
+	}
+
 
 	public List<String> findAll() {
 		return em.createNamedQuery("Article.findAll").getResultList();

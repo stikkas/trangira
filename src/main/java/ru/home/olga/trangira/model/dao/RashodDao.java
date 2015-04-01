@@ -2,7 +2,6 @@ package ru.home.olga.trangira.model.dao;
 
 import java.util.Date;
 import java.util.List;
-import org.springframework.stereotype.Component;
 import ru.home.olga.trangira.model.Article;
 import ru.home.olga.trangira.model.Rashod;
 
@@ -10,8 +9,11 @@ import ru.home.olga.trangira.model.Rashod;
  *
  * @author Благодатских С.
  */
-@Component
 public class RashodDao extends AbstractDao {
+
+	public RashodDao() {
+		super(true);
+	}
 
 	public List<Object[]> find(Date start, Date end) {
 		if (start != null && end != null) {

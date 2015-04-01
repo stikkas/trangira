@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.home.olga.trangira.model.dao.ArticleDao;
 import ru.home.olga.trangira.model.dao.RashodDao;
 import ru.home.olga.trangira.view.Controller;
@@ -32,10 +31,8 @@ public class MainApp extends Application {
 		completeStage(stage, "Trangira.fxml", "Трать не жалея!");
 		this.stage = stage;
 
-	    AnnotationConfigApplicationContext ctx
-			= new AnnotationConfigApplicationContext(SpringConfig.class);
-        ad = ctx.getBean(ArticleDao.class);
-        rd = ctx.getBean(RashodDao.class);
+        ad = new ArticleDao();
+        rd = new RashodDao();
 	}
 
 	public static void main(String[] args) {

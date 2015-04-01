@@ -13,10 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
-import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import ru.home.olga.trangira.MainApp;
 import ru.home.olga.utils.DateUtil;
 
@@ -81,10 +79,12 @@ public class MainController implements Controller {
 	 */
 	@FXML
 	private void chooseDB() {
-		DirectoryChooser dc = new DirectoryChooser();
-		File dir = dc.showDialog(app.getStage());
-		if (dir != null) {
-			app.getRd().reset(dir.getAbsolutePath());
+		FileChooser fc = new FileChooser();
+		fc.setTitle("Выбор файла базы данных");
+		fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Sqlite DB", "*.sqlite"));
+		File file = fc.showOpenDialog(app.getStage());
+		if (file != null) {
+			app.getRd().reset(file.getAbsolutePath());
 			table.getItems().clear();
 		}
 	}
@@ -100,16 +100,21 @@ public class MainController implements Controller {
 		items.clear();
 		Double total = 0.0;
 		for (Object[] r : app.getRd().find(start, end)) {
-			Double sum = (Double) r[1];
-			items.add(new Statistic((String) r[0], (Double) r[1]));
+			Double sum = trimSumma((Double) r[1]);
+			items.add(new Statistic((String) r[0], sum));
 			total += sum;
 		}
 		if (total > 0) {
 			items.add(new Statistic("", null));
-			total *= 100;
-			total = (double) total.intValue() / 100;
 			items.add(new Statistic("Итого", total));
 		}
+	}
+
+	/**
+	 * Обрезает до двух знаков после запятой
+	 */
+	private Double trimSumma(Double d) {
+		return (double) (Double.valueOf(d * 100).intValue()) / 100;
 	}
 
 	public void initialize() {

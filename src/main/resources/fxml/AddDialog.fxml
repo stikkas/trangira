@@ -22,7 +22,7 @@
             <Label text="Статья расхода:" />
             <ComboBox fx:id="articleBox" editable="true" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="458.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
             <Label text="Сумма:" GridPane.rowIndex="1" />
-            <TextField fx:id="sumEdit" maxWidth="-Infinity" prefHeight="26.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="sumEdit" maxWidth="-Infinity" onAction="#addRashod" prefHeight="26.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Дата:" GridPane.rowIndex="2" />
             <DatePicker fx:id="dateEdit" prefHeight="26.0" prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Button mnemonicParsing="false" onAction="#addRashod" text="Добавить" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
