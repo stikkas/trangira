@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import ru.home.olga.trangira.AutoCompleteComboBoxListener;
 import ru.home.olga.trangira.MainApp;
 import ru.home.olga.trangira.model.Article;
 import ru.home.olga.trangira.model.Data;
@@ -108,5 +109,6 @@ public class AddController implements Controller {
 	public void setApp(MainApp stage) {
 		app = stage;
 		articleBox.setItems(getArticles(null));
+		new AutoCompleteComboBoxListener(articleBox);
 	}
 }

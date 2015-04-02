@@ -28,11 +28,19 @@ public class MainApp extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
+		new Thread() {
+
+			@Override
+			public void run() {
+				ad = new ArticleDao();
+				rd = new RashodDao();
+			}
+
+		}.start();
+
 		completeStage(stage, "Trangira.fxml", "Трать не жалея!");
 		this.stage = stage;
 
-        ad = new ArticleDao();
-        rd = new RashodDao();
 	}
 
 	public static void main(String[] args) {
@@ -74,7 +82,6 @@ public class MainApp extends Application {
 		stage.setMinWidth(stage.getWidth());
 		stage.setMinHeight(stage.getHeight());
 	}
-
 
 	public ArticleDao getAd() {
 		return ad;
